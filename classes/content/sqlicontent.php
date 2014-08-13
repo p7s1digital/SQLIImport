@@ -589,14 +589,14 @@ class SQLIContent
     }
     
     /**
-     * Adds a "pending clear cache" action if ViewCaching is disabled.
+     * Adds a "pending clear cache" action if ViewCaching is enabled.
      * This method should be called at publish time.
      * Cache should then be cleared by a cronjob
      * @return void
      */
     public function addPendingClearCacheIfNeeded()
     {
-        if( eZINI::instance()->variable( 'ContentSettings', 'ViewCaching' ) === 'disabled' )
+        if( eZINI::instance()->variable( 'ContentSettings', 'ViewCaching' ) === 'enabled' )
         {
             $rowPending = array(
                 'action'        => self::ACTION_CLEAR_CACHE,
