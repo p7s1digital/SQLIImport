@@ -167,7 +167,9 @@ final class SQLIImportFactory
                 $aImportItems[$i]->setAttribute( 'status', SQLIImportItem::STATUS_RUNNING );
                 $aImportItems[$i]->store();
                 $this->currentImportItem = $aImportItems[$i];
-                
+
+                $handlerStartTime = time();
+
                 // First check if this handler has all needed configuration
                 $handler = $aImportItems[$i]->attribute( 'handler' );
                 $handlerSection = $handler.'-HandlerSettings';
@@ -247,6 +249,10 @@ final class SQLIImportFactory
                     newrelic_name_transaction('sqliimport - '.$handlerName);
                 }
 
+                // Set initial process time.
+                $aImportItems[$i]->setAttribute('process_time', time() - $handlerStartTime);
+                $aImportItems[$i]->store(array('process_time'));
+
                 $isInterrupted = false;
                 while( $row = $importHandler->getNextRow() )
                 {
@@ -269,7 +275,7 @@ final class SQLIImportFactory
                     $oldProcessTime = $aImportItems[$i]->attribute( 'process_time' );
                     $aImportItems[$i]->setAttribute( 'process_time', $oldProcessTime + $diffTime );
                     $aImportItems[$i]->store( array( 'process_time' ) );
-                    
+
                     // Interruption handling
                     if( $aImportItems[$i]->isInterrupted() )
                     {
