@@ -109,7 +109,7 @@ class SQLIImportUtils
         }
         return $userAccess;
     }
-    
+
     /**
      * Check access to a specific module/function with limitation values.
      * See eZ Publish documentation on more info on module, function and
@@ -123,6 +123,7 @@ class SQLIImportUtils
      * @param string $module
      * @param string $function
      * @param array|null $limitations A hash of limitation keys and values
+     * @param bool $debug
      * @return bool
      */
     public static function hasAccessToLimitation( $module, $function, $limitations = null, $debug = false )
@@ -269,6 +270,17 @@ class SQLIImportUtils
             }
             unset( $aObjectsToClear );
             eZContentObject::clearCache();
+
+            if ( eZINI::instance( 'site.ini' )->variable( 'ContentSettings', 'StaticCache' ) == 'enabled' )
+            {
+                $optionArray = array( 'iniFile' => 'site.ini',
+                                      'iniSection' => 'ContentSettings',
+                                      'iniVariable' => 'StaticCacheHandler' );
+
+                $options = new ezpExtensionOptions( $optionArray );
+                $staticCacheHandler = eZExtension::getHandlerClass( $options );
+                $staticCacheHandler::executeActions();
+            }
         }
         while( $i < $count );
         
