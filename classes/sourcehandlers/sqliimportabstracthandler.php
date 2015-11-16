@@ -79,11 +79,16 @@ abstract class SQLIImportAbstractHandler
     /**
      * Constructor
      */
-    public function __construct( SQLIImportHandlerOptions $options = null )
+    public function __construct(SQLIImportHandlerOptions $options = null)
     {
-        $this->importINI = eZINI::instance( 'sqliimport.ini' );
+        $this->importINI = eZINI::instance('sqliimport.ini');
         $this->cli = eZCLI::instance();
-        $this->options = $options;
+
+        if ($options instanceof SQLIImportHandlerOptions) {
+            $this->options = $options;
+        } else {
+            $this->options = new SQLIImportHandlerOptions([]);
+        }
     }
     
     /**
