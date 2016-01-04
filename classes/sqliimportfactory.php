@@ -243,7 +243,7 @@ final class SQLIImportFactory
                 );
                 $progressBar = new ezcConsoleProgressbar( $this->output, $processLength, $progressBarOptions );
                 $progressBar->start();
-                $this->cli->warning( 'Now processing "'.$handlerName.'" handler.' );
+                $this->cli->output( 'Now processing "'.$handlerName.'" handler.' );
 
                 if (extension_loaded('newrelic')) {
                     newrelic_name_transaction('sqliimport - '.$handlerName);
