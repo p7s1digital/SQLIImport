@@ -102,7 +102,7 @@ class SQLIImportLogger
     public static function writeMessage( $msg, $logType = self::NOTICELOG )
     {
         self::$cli = eZCLI::instance();
-        $isWebOutput = self::$cli->isWebOutput(); 
+        $isWebOutput = self::$cli->isWebOutput();
         switch( $logType )
         {
             case self::ERRORLOG:
