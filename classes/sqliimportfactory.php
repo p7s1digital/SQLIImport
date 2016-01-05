@@ -279,7 +279,7 @@ final class SQLIImportFactory
                     // Interruption handling
                     if( $aImportItems[$i]->isInterrupted() )
                     {
-                        $this->cli->notice();
+                        $this->cli->output();
                         SQLIImportLogger::logNotice( 'Interruption has been requested for current import ! Cleaning and aborting process...' );
                         $isInterrupted = true;
                         break;
@@ -288,7 +288,7 @@ final class SQLIImportFactory
                 
                 $importHandler->cleanup();
                 $progressBar->finish();
-                $this->cli->notice();
+                $this->cli->output();
                 unset( $importHandler );
                 
                 

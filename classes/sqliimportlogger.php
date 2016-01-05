@@ -122,7 +122,7 @@ class SQLIImportLogger
             case self::NOTICELOG:
             default:
                 if( !$isWebOutput )
-                    self::$cli->notice( $msg );
+                    self::$cli->output( $msg );
                 else
                     eZDebug::writeNotice( $msg, 'SQLIImport' );
             break;
