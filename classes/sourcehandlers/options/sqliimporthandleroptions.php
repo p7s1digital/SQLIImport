@@ -108,7 +108,7 @@ class SQLIImportHandlerOptions extends SQLIImportOptions
                 $aOptions = explode( self::OPTION_VALUE_DELIMITER, $options );
                 foreach( $aOptions as $option )
                 {
-                    list( $paramName, $paramValue ) = explode( '=', $option );
+                    list( $paramName, $paramValue ) = explode( '=', $option, 2 );
                     $aParams[$paramName] = $paramValue;
                 }
                 
