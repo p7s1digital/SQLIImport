@@ -194,17 +194,27 @@ class SQLIScheduledImport extends eZPersistentObject
      * @param int $offset Offset. Default is 0.
      * @param int $limit Limit. Default is null. If null, all imports items will be returned
      * @param array $conds Additional conditions for fetch. See {@link eZPersistentObject::fetchObjectList()}. Default is null
+     * @param array $sort_by Sort by for fetch. Default is null
      * @return SQLIScheduledImport[]
      */
-    public static function fetchList( $offset = 0, $limit = null, $conds = null )
+    public static function fetchList($offset = 0, $limit = null, $conds = null, $sort_by = null)
     {
-        if( !$limit )
+        if(!$limit)
             $aLimit = null;
         else
-            $aLimit = array( 'offset' => $offset, 'length' => $limit );
+            $aLimit = [
+                'offset' => $offset,
+                'length' => $limit
+            ];
         
-        $sort = array( 'requested_time' => 'asc' );
-        $aImports = self::fetchObjectList( self::definition(), null, $conds, $sort, $aLimit );
+
+        if (isset($sort_by)) {
+            $sort = $sort_by;
+        } else {
+            $sort = ['requested_time' => 'asc'];
+        }
+
+        $aImports = self::fetchObjectList(self::definition(), null, $conds, $sort, $aLimit);
         
         return $aImports;
     }
