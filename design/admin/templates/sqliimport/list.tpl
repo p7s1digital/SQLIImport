@@ -69,7 +69,7 @@
                         {foreach $imports as $import sequence array( 'bglight', 'bgdark' ) as $trClass}
                         <tr class="{$trClass}">
                             <td>{$import.handler_name}</td>
-                            <td>{$import.options|nl2br}</td>
+                            <td>{$import.options|nl2br|explode(' : ')|implode('=')}</td>
                             <td>{$import.user.login}</td>
                             <td>{$import.requested_time|l10n( 'shortdatetime' )}</td>
                             <td>
